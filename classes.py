@@ -21,27 +21,33 @@ class Velha:
 
 
 	def escolher(self):
-		linha = input('Linha: ')
-		coluna = input('Coluna: ')
 		try:
-			self.malha[int(linha)-1][int(coluna)-1] = self.turno
+			linha = int(input('Linha: '))-1
+			coluna = int(input('Coluna: '))-1
+			if self.malha[linha][coluna] == '-':
+				self.malha[linha][coluna] = self.turno
+				self.cont += 1
+				self.verificar()
+				if self.turno == 'X':
+					self.turno = 'O'
+				else:
+					self.turno = 'X'
+			else:
+				print('Casa ocupada')
+				input('> ')
 		except IndexError:
 			print('Error: Coluna ou linha inexistente')
 			input('> ')
 		except (ValueError, TypeError):
 			print('Error: Entre com um número inteiro válido')
+			input('> ')
 
 
 	def verificar(self):
 		if self.cont >= 5:
 			for i in range(0, 3):
-				if (self.malha[i][0] == self.malha[i][1] == self.malha[i][2]) or (self.malha[0][i] == self.malha[1][i] == self.malha[2][i]) or (malha[0][0] == malha[1][1] == malha[3][3]) or (malha[0][3] == malha[1][1] == malha[3][0]):
+				if (self.malha[i][0] == self.malha[i][1] == self.malha[i][2]) or (self.malha[0][i] == self.malha[1][i] == self.malha[2][i]) or (self.malha[0][0] == self.malha[1][1] == self.malha[2][2]) or (self.malha[0][2] == self.malha[1][1] == self.malha[2][0]):
 					self.vencedor = self.turno
-		if self.turno == 'X':
-			self.turno = 'O'
-		else:
-			self.turno = 'X'
-		self.cont += 1
 
 
 	def jogar(self):
@@ -49,7 +55,6 @@ class Velha:
 			clear()
 			self.mostrar()
 			if self.vencedor:
-				print(f'O vencedor é o jogador "{self.turno}"!')
+				print(f'O vencedor é o jogador "{self.vencedor}"!')
 				input('> ')
 			self.escolher()
-			self.verificar()
