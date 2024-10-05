@@ -3,10 +3,9 @@ import random
 
 
 class Velha:
-	def __init__(self, turno):
+	def __init__(self):
 		self.malha = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
-		self.turno = turno
-		self.rodando = False
+		self.turno = 'X'
 		self.cont = 0
 		self.vencedor = False
 
@@ -28,10 +27,7 @@ class Velha:
 				self.malha[linha][coluna] = self.turno
 				self.cont += 1
 				self.verificar()
-				if self.turno == 'X':
-					self.turno = 'O'
-				else:
-					self.turno = 'X'
+				self.turno = 'O'
 			else:
 				print('Casa ocupada')
 				input('> ')
@@ -50,6 +46,17 @@ class Velha:
 					self.vencedor = self.turno
 
 
+	def cpu(self):
+		while True:
+			linha = random.randint(0, 2)
+			coluna = random.randint(0, 2)
+			if self.malha[linha][coluna] == '-':
+				self.malha[linha][coluna] = 'O'
+				self.turno = 'X'
+				self.cont += 1
+				break
+
+
 	def jogar(self):
 		while True:
 			clear()
@@ -57,4 +64,8 @@ class Velha:
 			if self.vencedor:
 				print(f'O vencedor é o jogador "{self.vencedor}"!')
 				input('> ')
-			self.escolher()
+				break
+			if self.turno == 'X':
+				self.escolher()
+			else:
+				self.cpu()

@@ -1,5 +1,5 @@
 from classes import *
 
 
-velha = Velha('X')
+velha = Velha()
 velha.jogar()
