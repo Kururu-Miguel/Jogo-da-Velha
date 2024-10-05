@@ -6,7 +6,6 @@ class Velha:
 	def __init__(self):
 		self.malha = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 		self.turno = 'X'
-		self.cont = 0
 		self.vencedor = False
 
 
@@ -25,7 +24,6 @@ class Velha:
 			coluna = int(input('Coluna: '))-1
 			if self.malha[linha][coluna] == '-':
 				self.malha[linha][coluna] = self.turno
-				self.cont += 1
 				self.verificar()
 				self.turno = 'O'
 			else:
@@ -40,10 +38,9 @@ class Velha:
 
 
 	def verificar(self):
-		if self.cont >= 5:
-			for i in range(0, 3):
-				if (self.malha[i][0] == self.malha[i][1] == self.malha[i][2]) or (self.malha[0][i] == self.malha[1][i] == self.malha[2][i]) or (self.malha[0][0] == self.malha[1][1] == self.malha[2][2]) or (self.malha[0][2] == self.malha[1][1] == self.malha[2][0]):
-					self.vencedor = self.turno
+		for i in range(0, 3):
+			if (self.malha[i][0] != '-' and (self.malha[i][0] == self.malha[i][1] == self.malha[i][2])) or (self.malha[0][i] != '-' and (self.malha[0][i] == self.malha[1][i] == self.malha[2][i])) or (self.malha[0][0] != '-' and (self.malha[0][0] == self.malha[1][1] == self.malha[2][2])) or (self.malha[0][2] != '-' and (self.malha[0][2] == self.malha[1][1] == self.malha[2][0])):
+				self.vencedor = self.turno
 
 
 	def cpu(self):
@@ -52,12 +49,16 @@ class Velha:
 			coluna = random.randint(0, 2)
 			if self.malha[linha][coluna] == '-':
 				self.malha[linha][coluna] = 'O'
+				self.verificar()
 				self.turno = 'X'
-				self.cont += 1
 				break
 
 
 	def jogar(self):
+		if random.randint(0, 1) == 1:
+			self.turno = 'X'
+		else:
+			self.turno = 'O'
 		while True:
 			clear()
 			self.mostrar()
