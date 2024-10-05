@@ -15,17 +15,18 @@ class Menu:
 		print(f'|{"="*(self.largura+5)}|')
 
 
-	def validar(self, entrada):
-		try:
-			return int(entrada)
-		except (ValueError, TypeError):
-			print("Error: Entre com um número inteiro válido.")
-			input('> ')
-
-
 	def chamar(self):
 		while True:
 			clear()
 			self.mostrar()
-			entrada = input('> ')
-			self.validar(entrada)
+			entrada = input('# ')
+			try:
+				entrada = int(entrada)
+				if 0 < entrada <= self.quantidadeOpções:
+					return entrada
+				else:
+					print('A opção escolhida não existe.')
+					input('> ')
+			except (ValueError, TypeError):
+				print("Error: Entre com um número inteiro válido.")
+				input('> ')
